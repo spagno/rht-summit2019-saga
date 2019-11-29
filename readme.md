@@ -95,9 +95,10 @@ Install the debezium connectors:
 ```bash
 cd debezium/connector/
 
-curl -X POST -H "Accept:application/json" -H "Content-Type:application/json" http://<outbox-connect-url>/connectors/ -d @ticket-connector.json
-curl -X POST -H "Accept:application/json" -H "Content-Type:application/json" http://<outbox-connect-url>/connectors/ -d @order-connector.json
-curl -X POST -H "Accept:application/json" -H "Content-Type:application/json" http://<outbox-connect-url>/connectors/ -d @payment-connector.json
+outboxurl=$(oc get route outbox-connect -o jsonpath='{.spec.host}')
+curl -X POST -H "Accept:application/json" -H "Content-Type:application/json" http://${outboxurl}/connectors/ -d @ticket-connector.json
+curl -X POST -H "Accept:application/json" -H "Content-Type:application/json" http://${outboxurl}/ -d @order-connector.json
+curl -X POST -H "Accept:application/json" -H "Content-Type:application/json" http://${outboxurl}/connectors/ -d @payment-connector.json
 ```
 
 Install ticket, insurance and payment microservice:
